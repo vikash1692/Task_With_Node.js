@@ -1,25 +1,11 @@
-class GeneralError extends Error {
-    constructor(message) {
-      super();
-      this.message = message;
-    }
-  
-    getCode() {
-      if (this instanceof BadRequest) {
-        return 400;
-      } 
-      if (this instanceof NotFound) {
-        return 404;
-      }
-      return 500;
-    }
+class AppError extends Error {
+  constructor(message, statusCode) {
+      super(message);
+      this,statusCode = statusCode;
+      this.isOperational = true;
+
+      Error.captureStackTrace(this, this.constructor)
   }
-  
-  class BadRequest extends GeneralError { }
-  class NotFound extends GeneralError { }
-  
-  module.exports = {
-    GeneralError,
-    BadRequest,
-    NotFound
-  };
+}
+
+module.exports = AppError;

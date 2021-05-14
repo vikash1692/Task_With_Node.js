@@ -26,6 +26,21 @@ app.use('/', (req, res) => {
     res.status(200).send('Server Works');
 });
 
+app.all('*', (req, res, next)=>{
+    const err = new Error(`Requested URL ${req.path} not Found!`);
+    err.statusCode = 404;
+    next(err);
+})
+
+app.use((err, req, res, next) =>{
+    const statusCode = err.statusCode || 500;
+    res.status(statusCode).json({
+        success:0,
+        message: err.message,
+        stack: err.stack
+    })
+});
+
 const server = http.createServer(app);
 const port = process.env.SERVER_PORT || 3004;
 server.listen(port);

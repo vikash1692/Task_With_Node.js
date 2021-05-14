@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require('uuid');
 const { validator } = require('../utils');
 const User = require('../models/User');
 const log = bunyan.createLogger({name: 'myapp'});
-const { NotFound, BadRequest } = require('../error');
+const AppError = require('../error');
 const { getAllUsers,getUserById, createUser,updateUser, deleteUser,getAutoSuggestUsers } = require('../services/UserServices');
 const router = express.Router();
 
@@ -23,10 +23,11 @@ router.get('/getUserById/:id', async(req, res) => {
             return res.status(200).json(found);
         } else {
             log.info('user not found!');
-            throw new NotFound('user not found');
+            throw new AppError('User not found!', 404)
         }
     } catch(e) {
-        console.log(e.message)
+        log.info(e.message);
+        throw new AppError(e.message, 502)
     }       
 })
 
@@ -45,10 +46,11 @@ router.post('/createUser', async(req, res) => {
         return res.status(201).json(users);
     } else {
         log.info('user is not created!');
-        throw new NotFound('user is not created!');
+        throw new AppError('user is not created!', 402)
     }
     } catch(e) {
-        console.log(e.message)
+        log.info('e.message')
+        throw new AppError(e.message, 502)
     }
 })
 
@@ -61,7 +63,7 @@ router.get('/getAutoSuggestUsers', async(req, res) => {
         log.info('get auto suggest user!');
         res.status(200).json(result.slice(0,limit))
     }else{
-        throw new NotFound('Auto suggest user not found!');
+        throw new AppError('Auto suggest user not found!', 402)
     }
    
 })
@@ -85,13 +87,13 @@ router.put('/updateUser/:id', async(req, res) => {
                 return res.status(200).send(updatedUser);
             } else {
                 log.info('user not found!');
-                throw new NotFound('user not found!')
+                throw new AppError('user not found!', 404)
             }
         } else {
-            res.status(400).json(message)
+            throw new AppError(message, 400)
         }
     }catch(e) {
-        console.log(e.message)
+        throw new AppError(e.message, 502)
     }
 })
 
@@ -105,7 +107,7 @@ router.delete('/deleteUser/:id',async (req, res) => {
         return res.sendStatus(200)
     } else {
         log.info('user not found!');
-        throw new NotFound('user not found!')
+        throw new AppError('user not found!', 404)
     }
 });
 
