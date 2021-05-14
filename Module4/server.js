@@ -2,7 +2,6 @@ const http = require('http');
 const express = require('express');
 const dotenv = require('dotenv');
 dotenv.config();
-const handleErrors = require('./middleware');
 
 
 const user = require('./controllers/UserRoute');
@@ -18,7 +17,6 @@ app.use(express.json());
 app.use(express.urlencoded({
     extended:true
 }));
-app.use(handleErrors)
 app.use('/user',user)
 app.use('/group',group)
 // default URL to API
