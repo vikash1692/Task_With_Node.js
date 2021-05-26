@@ -9,7 +9,8 @@
     "task2": "node ./Module1/Task2/index.js",
     "task3": "babel ./Module1/Task3/index.js -d output && node ./output/index.js",
     "module2": "nodemon ./Module2/server.js",
-    "module4": "nodemon ./Module4/server.js"
+    "module4": "nodemon ./Module4/server.js",
+    "module6": "nodemon ./Module6/server.js"
   },
   "repository": {
     "type": "git",
@@ -23,9 +24,12 @@
   "homepage": "https://github.com/findayush/NodeJs#readme",
   "dependencies": {
     "@babel/runtime": "^7.13.10",
+    "bcryptjs": "^2.4.3",
     "bunyan": "^1.8.15",
+    "cors": "^2.8.5",
     "csvtojson": "^2.0.10",
     "dotenv": "^8.2.0",
+    "jsonwebtoken": "^8.5.1",
     "pg": "^8.6.0",
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.6.2",
