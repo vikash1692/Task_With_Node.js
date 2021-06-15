@@ -4,13 +4,22 @@
   "description": "Node Js Mentoring",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
+    "migrate": "npx sequelize-cli db:migrate",
+    "migrate:reset": "npx sequelize-cli db:migrate:undo:all && npm run migrate",
     "task1": "node ./Module1/Task1/index.js",
     "task2": "node ./Module1/Task2/index.js",
     "task3": "babel ./Module1/Task3/index.js -d output && node ./output/index.js",
     "module2": "nodemon ./Module2/server.js",
     "module4": "nodemon ./Module4/server.js",
-    "module6": "nodemon ./Module6/server.js"
+    "module6": "nodemon ./Module6/server.js",
+    "module7": "nodemon ./Module7/server.js"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
   },
   "repository": {
     "type": "git",
@@ -40,9 +49,12 @@
     "@babel/core": "^7.13.10",
     "@babel/plugin-transform-runtime": "^7.13.15",
     "@babel/preset-env": "^7.13.10",
+    "cross-env": "^7.0.3",
     "express": "^4.17.1",
     "express-joi-validation": "^5.0.0",
+    "jest": "^27.0.4",
     "joi": "^17.4.0",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "supertest": "^6.1.3"
   }
 }
